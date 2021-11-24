@@ -1,4 +1,4 @@
-package com.manifesters.alumni.dao;
+package com.manifesters.alumni.types;
 
 import javax.persistence.*;
 
