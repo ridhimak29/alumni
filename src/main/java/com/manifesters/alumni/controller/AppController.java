@@ -1,6 +1,6 @@
 package com.manifesters.alumni.controller;
 
-import com.manifesters.alumni.dao.User;
+import com.manifesters.alumni.types.User;
 import com.manifesters.alumni.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
