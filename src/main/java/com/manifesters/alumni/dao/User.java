@@ -3,23 +3,31 @@ package com.manifesters.alumni.dao;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "ALUMNI")
 public class User {
     @Id
+    @Column(unique = true,name = "ALUMNI_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+    @Column(name = "USERNAME")
     private String email;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "FIRST_NAME")
     private String firstname;
+    @Column(name = "LAST_NAME")
     private String lastName;
+    @Column(name = "ROLE")
+    private String role;
 
-    public User(Long id, String email, String password, String firstname, String lastName) {
+
+    public User(Long id, String email, String password, String firstname, String lastName,String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.lastName = lastName;
+        this.role = role;
     }
 
     public User() {
@@ -65,4 +73,13 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }
