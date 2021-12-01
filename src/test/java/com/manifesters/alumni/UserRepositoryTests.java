@@ -1,6 +1,6 @@
 package com.manifesters.alumni;
 
-import com.manifesters.alumni.dao.User;
+import com.manifesters.alumni.types.User;
 import com.manifesters.alumni.dao.UserRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;

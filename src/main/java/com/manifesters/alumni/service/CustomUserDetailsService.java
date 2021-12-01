@@ -1,11 +1,13 @@
-package com.manifesters.alumni.dao;
+package com.manifesters.alumni.service;
 
+import com.manifesters.alumni.dao.UserRepository;
+import com.manifesters.alumni.types.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class customUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepo;
