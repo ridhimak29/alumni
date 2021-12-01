@@ -1,0 +1,12 @@
+.bg-danger {
+    background-color: #800020;
+}
+.text-white {
+   color: #FFFFFF !important;
+}
+
+.navbar-inverse .navbar-nav li a{
+	color : #FFFFFF;
+	  font-weight: bold;
+	
+}
