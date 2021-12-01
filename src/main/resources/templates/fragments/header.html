@@ -55,8 +55,15 @@
 								<button class="btn btn-secondary" type="button">Search</button>
 							</form>
 						</li>
-						<li class="inlineblock"><a th:href="@{/register}">SignUp</a></li>
-						<li class="position-absolute top-0 end-0"><a th:href="@{/login}">Login</a></li>
+
+						<span th:switch="${auth.principal}">
+							<span th:case="anonymousUser">
+								<li><a href="/login">Login</a></li>
+								<li><a href="/signup">Sign Up</a></li>
+							</span>
+							<span th:case="*"><li><a href="/logout">Logout</a></li></span>
+						</span>
+						<li th:text="${sessionId}"></li>
 					</ul>
 				</div>
 			</div>
