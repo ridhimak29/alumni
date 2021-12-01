@@ -1,5 +1,6 @@
-package com.manifesters.alumni.dao;
+package com.manifesters.alumni.service;
 
+import com.manifesters.alumni.types.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

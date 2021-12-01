@@ -1,4 +1,4 @@
-package com.manifesters.alumni.dao;
+package com.manifesters.alumni.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

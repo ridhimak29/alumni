@@ -1,5 +1,6 @@
-package com.manifesters.alumni.dao;
+package com.manifesters.alumni.config;
 
+import com.manifesters.alumni.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new customUserDetailsService();
+        return new CustomUserDetailsService();
     }
 
     @Bean
@@ -45,8 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/home").authenticated()
+                .antMatchers("/home", "event").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

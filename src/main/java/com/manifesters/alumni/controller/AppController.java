@@ -1,7 +1,6 @@
 package com.manifesters.alumni.controller;
 
-import com.manifesters.alumni.dao.CustomUserDetails;
-import com.manifesters.alumni.dao.User;
+import com.manifesters.alumni.types.User;
 import com.manifesters.alumni.dao.UserRepository;
 import com.manifesters.alumni.service.UserSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
