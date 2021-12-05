@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Page</title>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <h1 th:text="'Event Id:' + ${eventId}"></h1>
+    <h1 th:text="'Event Price:' + ${eventPrice}"></h1>
+    <h1 th:text="'Purchased Quantity:' + ${purchaseQuantity}"></h1>
+</div>
+</body>
+</html>
