@@ -161,9 +161,25 @@ body
 <div>
 <form th:action="@{/logout}" method="post">
     <p>
-        Welcome
+        Welcome<b>[[${#request.userPrincipal.principal.fullName}]]</b>
     </p>
+    <nav role="navigation">
+        <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+            <a href="#"><li>Home</li></a>
+            <a href="#"><li>About</li></a>
+            <a href="#"><li>Info</li></a>
+            <a href="#"><li>Contact</li></a>
+            <a href="#" value="Sign Out"><li>SignOut</li></a>
+            <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
+        </ul>
 
+        </div>
+    </nav>
     <input type="submit" value="Sign Out" />
     </form>
 </div>
