@@ -25,20 +25,20 @@
 						<li><a href="/"><img src="/images/logo.png"
 								class="float-start" height="50"></a></li>
 						<li><a href="/">Home</a></li>
-						<li><a href="/event">Events</a></li>
+						<li><a href="/events">Events</a></li>
 						<li><a href="/FAQs">FAQ</a></li>
 						<li><a href="/aboutus">About Us</a></li>
 						<li><a href="/contactus">Contact Us</a></li>
 
 
-						<span th:switch="${auth.principal}">
+						<!-- <span th:switch="${auth.principal}">
 							<span th:case="anonymousUser">
 								<li><a href="/login">Login</a></li>
 								<li><a href="/signup">Sign Up</a></li>
 							</span>
 							<span th:case="*"><li><a href="/logout">Logout</a></li></span>
 						</span>
-						<li th:text="${sessionId}"></li>
+						<li th:text="${sessionId}"></li> -->
 					</ul>
 				</div>
 			</div>
