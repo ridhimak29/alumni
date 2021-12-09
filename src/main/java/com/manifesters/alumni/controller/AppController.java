@@ -1,19 +1,27 @@
 package com.manifesters.alumni.controller;
 
+import com.manifesters.alumni.dao.EventRepository;
+import com.manifesters.alumni.types.Transaction;
 import com.manifesters.alumni.types.User;
 import com.manifesters.alumni.dao.UserRepository;
 import com.manifesters.alumni.service.UserSessionService;
+import com.manifesters.alumni.dao.TransactionRepository;
+import com.manifesters.alumni.types.Event;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class AppController {
@@ -21,7 +29,13 @@ public class AppController {
     UserRepository userRepo;
 
     @Autowired
+    TransactionRepository transactionRepository;
+
+    @Autowired
     UserSessionService userSessionService;
+
+    @Autowired
+    EventRepository eventRepository;
 
     @GetMapping("")
     public String viewHomePage(Model model){
@@ -46,6 +60,44 @@ public class AppController {
         userRepo.save(user);
 
         return "register_success";
+    }
+
+    @PostMapping("/transaction")
+    public  String processConfirm(@ModelAttribute Transaction transaction, @RequestParam String purchaseQuantity, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
+
+        transaction.setTransactionDate(Calendar.getInstance().getTime());
+        transaction.setCreateUser("System");
+        transaction.setCreateTs(Calendar.getInstance().getTime());
+
+        //Setting EventId and AlumniId as null for testing, as no entry exists in respective tables.
+        transaction.setEventId(transaction.getEventId());
+
+        transaction.setAlumniId(transaction.getAlumniId());
+
+        System.out.println("Transaction - " + transaction);
+
+        Transaction txn = transactionRepository.save(transaction);
+
+        Event event = eventRepository.getById(transaction.getEventId());
+
+        System.out.println("Payment Successfully Saved - " + txn);
+        System.out.println("Ticket Quantity - " + purchaseQuantity);
+
+        String eventDateStr = getDateString(event.getDate());
+
+        model.addAttribute("transaction", txn);
+        model.addAttribute("event", event);
+        model.addAttribute("eventDate", eventDateStr);
+        model.addAttribute("ticketQuantity", purchaseQuantity);
+
+        return "transaction_success";
+    }
+
+    private String getDateString(Date date) {
+
+        return new SimpleDateFormat("EEE, d MMM yyyy HH:mm aaa").format(date);
     }
 
     @GetMapping("/home")

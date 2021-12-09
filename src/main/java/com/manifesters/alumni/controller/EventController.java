@@ -1,5 +1,6 @@
 package com.manifesters.alumni.controller;
 
+import com.manifesters.alumni.domain.TransactionType;
 import com.manifesters.alumni.service.EventService;
 import com.manifesters.alumni.types.Event;
 import com.manifesters.alumni.util.FileUploadUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +43,10 @@ public class EventController {
         FileUploadUtil.saveFile( fileName, file);
         // Create a new event with imagePath
         Event newEvent = new Event(event.getEventName(), event.getVenue(), event.getDescription(), event.getDate(), fileName, event.getPrice());
+
+        newEvent.setCreateUser("System");
+        newEvent.setCreateTs(Calendar.getInstance().getTime());
+
         service.saveEvent(newEvent);
         return "redirect:/events";
     }
@@ -54,10 +60,27 @@ public class EventController {
 
     @PostMapping(value = "/buy_ticket")
     public String buyTicket(@RequestParam String id, @RequestParam String price, @RequestParam String quantity, Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
+
         model.addAttribute("eventId", id );
+        model.addAttribute("eventType", TransactionType.Event.toString());
         model.addAttribute("eventPrice", price);
         model.addAttribute("purchaseQuantity", quantity);
-        return "transaction";
+
+        String priceStr = price.split("\\$")[1];
+
+        double priceNew = Double.valueOf(priceStr);
+        double subTotal = priceNew * Long.valueOf(quantity);
+        double totalTax = subTotal * 0.02;
+        double txnAmt = subTotal + totalTax;
+
+        model.addAttribute("eventPrice", priceNew);
+        model.addAttribute("subTotal", subTotal);
+        model.addAttribute("tax", totalTax);
+        model.addAttribute("totalAmount", txnAmt);
+
+        return "payment_confirmation";
     }
 
     @InitBinder
