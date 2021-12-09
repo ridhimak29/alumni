@@ -5,6 +5,8 @@ import com.manifesters.alumni.types.Event;
 import com.manifesters.alumni.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,6 +27,8 @@ public class EventController {
 
     @GetMapping("/events")
     public String populateEvents(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
         List<Event> events  = service.getAllEvents(0, 15, "date");
         model.addAttribute("events", events );
         return "event";
@@ -41,17 +45,18 @@ public class EventController {
         return "redirect:/events";
     }
 
+    @PostMapping(value = "delete_event")
+    public String deleteEvent(@RequestParam Long eventId, Model model){
+        service.deleteEvent(eventId);
+        return "redirect:/events";
+    }
+
+
     @PostMapping(value = "/buy_ticket")
-    public String buyTicket(@CookieValue(value = "JSESSIONID", defaultValue = "55b83b76-2741-4b0c-9df1-c07ee4dec646") String sessionId,
-                            @RequestParam String id, @RequestParam String price, @RequestParam String quantity, Model model){
-        System.out.println( "Session Id:"+ sessionId);
+    public String buyTicket(@RequestParam String id, @RequestParam String price, @RequestParam String quantity, Model model){
         model.addAttribute("eventId", id );
         model.addAttribute("eventPrice", price);
         model.addAttribute("purchaseQuantity", quantity);
-        if (!StringUtils.hasText(sessionId)){
-            model.addAttribute("forwardTo", "transaction");
-            return "login";
-        }
         return "transaction";
     }
 

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/css/event.css">
     <script>
         function buyTicket(idAndDateTime){
@@ -22,6 +22,9 @@
             $("#modal-event-date").text(date);
             $("#event-hidden-id").val(id);
             $("#event-hidden-price").val(eventPrice);
+        }
+        function deleteEvent(id){
+            $("#modal-event-delete").val(id);
         }
     </script>
     <link rel="stylesheet" href="css/hb.css">
@@ -42,122 +45,48 @@
             </div>
             <!-- Column -->
         </div>
-        <div class="row justify-content-end">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" th:if="${auth.principal != 'anonymousUser' and !#strings.equals(auth.authorities[0], 'Alumni')}">
             <button type="button" class="btn btn-primary button-color" data-bs-toggle="modal" data-bs-target="#createEvent">
                 Create Event
             </button>
-            <!-- Modal for create event -->
-            <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#" th:action="@{/create_event}" th:object="${event}" method="post" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label class="col-form-label">Name:</label>
-                                    <input type="text" class="form-control" field="*{eventName}" name="eventName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Venue:</label>
-                                    <input type="text" field="*{venue}" name="venue" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Description:</label>
-                                    <textarea field="*{description}" name="description" class="form-control"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Price:</label>
-                                    <input type="number" field="*{price}" name="price" step="0.01" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Image Upload:</label>
-                                    <input type="file" name="file" accept="image/*" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Date & Time: </label>
-                                    <input type="datetime-local" field="*{date}" name="date" class="form-control" required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary button-color">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="row mt-4" th:unless="${#lists.isEmpty(events)}">
-            <!-- Column -->
-            <div class="col-md-4 on-hover" th:each="event : ${events}">
-                <div class="card border-0 mb-4">
-                    <a href="#">
-                        <img class="card-img-top" th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
-                    <div class="date-pos p-2 d-inline-block text-center rounded text-white position-absolute button-color">
-                        <span class="event-date" th:text="${#dates.monthNameShort(event.date)}"></span>
-                        <span class="d-block" th:text="${#dates.day(event.date)}"></span>
-                        <p class="event-time" th:text="${#dates.hour(event.date)} + ':' + ${#dates.minute(event.date)} + ' EST'" ></p>
-                    </div>
-                    <h5 class="font-weight-medium mt-3"><a href="#" class="text-decoration-none link" th:text="${event.eventName}" th:id="'event-name-'+ ${event.id}"></a><span class="float-right" th:text="'$' + ${event.price}" th:id="'event-price-'+ ${event.id}"></span></h5>
-                    <p class="mt-3"  th:text="${event.venue}" th:id="'event-venue-'+ ${event.id}"></p>
-                    <div>
-                        <a class="collapsed" data-bs-toggle="collapse" th:href="'#collapseExample_' + ${event.id}" aria-expanded="false" aria-controls="collapseExample">
-                            Learn More
-                        </a>
-                        <button class="btn btn-primary btn-sm float-right button-color" type="button" data-bs-toggle="modal" data-bs-target="#buyTicketModal"
-                                th:attr="onclick='buyTicket(\'' + ${event.id}+ '_'+ ${event.date} + '\');'">Buy Tickets</button>
-                        <div class="collapse" th:id="'collapseExample_' + ${event.id}" style="">
-                            <div class="card card-body border-0">
-                                <span th:text="${event.description}"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal for Buy Ticket-->
-        <div class="modal fade" id="buyTicketModal" tabindex="-1" role="dialog" aria-labelledby="buyTicketModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- Modal for create event -->
+        <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="buyTicketModalTitle">Buy Ticket</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="col-form-label">Event Name:</label>
-                            <span id="modal-event-name" class="font-weight-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Venue:</label>
-                            <span id="modal-event-venue" class="font-weight-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Date & Time:</label>
-                            <span id="modal-event-date" class="font-weight-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Price:</label>
-                            <span id="modal-event-price" class="font-weight-bold"></span>
-                        </div>
-                        <form action="#" th:action="@{/buy_ticket}" method="post">
+                        <form action="#" th:action="@{/create_event}" th:object="${event}" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label class="col-form-label">Quantity to be purchased:</label>
-                                <input type="hidden" field="*{id}" name="id" id="event-hidden-id">
-                                <input type="hidden" field="*{price}" name="price" id="event-hidden-price">
-                                <select field="*{quantity}" name="quantity">
-                                    <option th:each="i : ${#numbers.sequence(1, 25)}" th:value="${i}" th:text="${i}">
-                                    </option>
-                                </select>
+                                <label class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" field="*{eventName}" name="eventName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label">Venue:</label>
+                                <input type="text" field="*{venue}" name="venue" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label">Description:</label>
+                                <textarea field="*{description}" name="description" class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label">Price:</label>
+                                <input type="number" field="*{price}" name="price" step="0.01" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label">Image Upload:</label>
+                                <input type="file" name="file" accept="image/*" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label">Date & Time: </label>
+                                <input type="datetime-local" field="*{date}" name="date" class="form-control" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Confirm Buy</button>
+                                <button type="submit" class="btn btn-primary button-color">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -165,6 +94,115 @@
             </div>
         </div>
     </div>
+    <div class="row mt-4 margin-left-5px margin-right-5px" th:unless="${#lists.isEmpty(events)}">
+        <!-- Column -->
+        <div class="col-md-4 on-hover" th:each="event : ${events}">
+            <div class="card border-0 mb-4">
+                <a href="#">
+                    <img class="card-img-top" th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
+                <div class="date-pos p-2 d-inline-block text-center rounded text-white position-absolute button-color">
+                    <span class="event-date" th:text="${#dates.monthNameShort(event.date)}"></span>
+                    <span class="d-block" th:text="${#dates.day(event.date)}"></span>
+                    <p class="event-time" th:text="${#dates.hour(event.date)} + ':' + ${#dates.minute(event.date)} + ' EST'" ></p>
+                </div>
+                <h5 class="font-weight-medium mt-3"><a href="#" class="text-decoration-none link" th:text="${event.eventName}" th:id="'event-name-'+ ${event.id}"></a><span class="float-end" th:text="'$' + ${event.price}" th:id="'event-price-'+ ${event.id}"></span></h5>
+                <div class="row mt-2">
+                    <p th:text="${event.venue}" th:id="'event-venue-'+ ${event.id}"></p>
+                    <div class="margin-top-40px" th:if="${auth.principal != 'anonymousUser' and !#strings.equals(auth.authorities[0], 'Alumni')}">
+                            <span class="float-end" th:id="'event-delete-'+ ${event.id}" th:attr="onclick='deleteEvent(' + ${event.id} + ');'" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                </svg>
+                            </span>
+                    </div>
+                </div>
+                <div>
+                    <a th:if="${event.description != '' }" class="collapsed" data-bs-toggle="collapse" th:href="'#collapseExample_' + ${event.id}" aria-expanded="false" aria-controls="collapseExample">
+                        Read More
+                    </a>
+                    <div th:switch="${auth.principal}">
+                        <button th:case="'anonymousUser'" class="btn btn-primary btn-sm float-end button-color" onclick="window.location.href='/login'">Buy Tickets</button>
+                        <button th:case="*" class="btn btn-primary btn-sm float-end button-color" type="button" data-bs-toggle="modal" data-bs-target="#buyTicketModal"
+                                th:attr="onclick='buyTicket(\'' + ${event.id}+ '_'+ ${event.date} + '\');'">Buy Tickets</button>
+                    </div>
+                    <div class="collapse" th:id="'collapseExample_' + ${event.id}" style="">
+                        <div class="card card-body border-0">
+                            <span th:text="${event.description}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Delete Event -->
+    <div class="modal fade" id="deleteTicketModal" tabindex="-1" role="dialog" aria-labelledby="deleteTicketModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete this event?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form action="#" th:action="@{/delete_event}" method="post">
+                        <input type="hidden" id="modal-event-delete" field="*{eventId}" name="eventId">
+                        <button type="submit" class="btn btn-primary button-color">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Buy Ticket-->
+    <div class="modal fade" id="buyTicketModal" tabindex="-1" role="dialog" aria-labelledby="buyTicketModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buyTicketModalTitle">Buy Ticket</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label">Event Name:</label>
+                        <span id="modal-event-name" class="font-weight-bold"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Venue:</label>
+                        <span id="modal-event-venue" class="font-weight-bold"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Date & Time:</label>
+                        <span id="modal-event-date" class="font-weight-bold"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Price:</label>
+                        <span id="modal-event-price" class="font-weight-bold"></span>
+                    </div>
+                    <form action="#" th:action="@{/buy_ticket}" method="post">
+                        <div class="mb-3">
+                            <label class="col-form-label">Quantity to be purchased:</label>
+                            <input type="hidden" field="*{id}" name="id" id="event-hidden-id">
+                            <input type="hidden" field="*{price}" name="price" id="event-hidden-price">
+                            <select field="*{quantity}" name="quantity">
+                                <option th:each="i : ${#numbers.sequence(1, 25)}" th:value="${i}" th:text="${i}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Confirm Buy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>
