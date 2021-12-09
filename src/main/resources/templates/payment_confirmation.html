@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment Confirmation</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <style type="text/css">
+        .thumbnail {
+            position: relative;
+            width: 100%;
+            height: 5%;
+        }
+
+        .caption {
+            position: absolute;
+            top: 45%;
+            left: 0;
+            width: 100%;
+            font-size: xxx-large;
+              font-weight: bold;
+
+            }
+
+
+
+    </style>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="css/bootstrap.min_local.css"/>
+    <!-- adds ajax and bootstrap libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--Stylesheet for Header/Footer-->
+    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="css/hb.css">
+
+
+
+    <!-- adds bootstrap libraries -->
+
+    <!-- adds ajax and bootstrap libraries -->
+    <sript type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></sript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!--adds bootstrap scripts-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+
+
+    <!--adds custom Scripts-->
+    <script src="/js/jquery.payform.js"></script>
+    <script src="/js/script.js"></script>
+
+    <!--Script to combine Expirymonth and expiryYear into one field-->
+    <script>
+        $(document).on('change','#ccexpiryyear',function () {
+            // Set the value of a hidden input field for Card
+            $('#expiryDate').val($('#ccexpirymonth').val() + '/' + $('#ccexpiryyear').val());
+            // Trigger the "change" event manually
+            var evt = document.createEvent('HTMLEvents');
+            evt.initEvent('change', false, true);
+            document.getElementById('expiryDate').dispatchEvent(evt);
+        });
+
+
+    </script>
+
+</head>
+<body>
+<!--Header part to include common Menu Option.-->
+<header th:insert="fragments/header.html :: header"></header>
+
+
+<div class="container text-danger">
+    <div class="d-flex justify-content-center mt-3 mb-3 bg-warning"></div>
+    <div class="container">
+        <!-- For demo purpose -->
+        <!--<div class="row mb-2">-->
+        <div class="col-lg-8 mx-auto text-center">
+            <h4 class="display-6"><b>Confirm Order and Pay</b></h4>
+        </div>
+        <!-- </div>--> <!-- End -->
+        <hr class="hr-danger"/>
+        <div class="text-hr text-hr--right">
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-6 mx-auto">
+                <div class="col-md-6"><h6><b>Payment Method</b></h6></div>
+                <div class="card mb-3">
+                    <div class="card-header">
+
+                        <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2 ">
+                            <!-- Credit card form tabs -->
+                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3 danger text-danger">
+                                <li class="nav-item"><a data-toggle="pill" href="#credit-card"
+                                                        class="nav-link active "> <i
+                                        class="fas fa-credit-card mr-2 text-danger"></i> Credit Card </a></li>
+                                <li class="nav-item"><a data-toggle="pill" href="#paypal" class="nav-link"> <i
+                                        class="fab fa-paypal mr-2"></i> Paypal </a></li>
+                                <li class="nav-item"><a data-toggle="pill" href="#net-banking" class="nav-link"> <i
+                                        class="fas fa-mobile-alt mr-2"></i> Net Banking </a></li>
+                            </ul>
+                        </div> <!-- End -->
+                        <!-- Credit card form content -->
+                        <div class="tab-content">
+                            <!-- credit card info-->
+                            <div id="credit-card" class="tab-pane fade show active pt-3">
+                                <form role="form" th:action="@{/transaction}"
+                                      th:object="${transaction}"
+                                      method="post" id="paymentForm">
+                                    <input type="hidden" name="amount" id="amount" th:value="${totalAmount}"/>
+                                    <input type="hidden" name="alumniId" id="alumniId" th:value="${alumniId}"/>
+                                    <input type="hidden" name="eventId" id="eventId" th:value="${eventId}"/>
+                                    <input type="hidden" name="transactionType" id="transactionType"
+                                           th:value="${transactionType}"/>
+                                    <input type="hidden" name="expiryDate" id="expiryDate"/>
+                                    <input type="hidden" field="*{purchaseQuantity}" name="purchaseQuantity" id="purchaseQuantity" th:value="${purchaseQuantity}"/>
+
+                                    <div class="form-group">
+                                        <label for="cardName"><h6>Card Owner</h6></label>
+                                        <input type="text" name="cardName" id="cardName"
+                                               placeholder="Card Owner Name" required="true"
+                                               class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardNumber"><h6>Card number</h6></label>
+                                        <div class="input-group" id="card-number-field">
+                                            <input type="text" id="cardNumber" name="cardNumber"
+                                                   placeholder="Valid card number"
+                                                   class="form-control" required="true"/>
+                                            <div class="input-group-append">
+                                            <span class="input-group-text text-muted">
+                                                <i class="fab fa-cc-visa mx-1" id="visa"></i>
+                                                <i class="fab fa-cc-mastercard mx-1" id="mastercard"></i>
+                                                <i class="fab fa-cc-amex mx-1" id="amex"></i>
+                                            </span>
+                                            </div>
+                                            <!--<div class="input-group-append" id="credit_cards">
+                                                <span class="input-group-text text-muted">
+                                                    <img src="/images/visa.jpg" id="visa"/>
+                                                    <img src="/images/mastercard.jpg" id="mastercard"/>
+                                                    <img src="/images/amex.jpg" id="amex"/>
+                                                </span>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label for="ccexpirymonth"><h6>Month</h6></label>
+                                            <select class="form-control" id="ccexpirymonth" name="ccexpirymonth">
+                                                <option>-</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>12</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label for="ccexpiryyear"><h6>Year</h6></label>
+                                            <select class="form-control" id="ccexpiryyear" name="ccexpiryyear">
+                                                <option>-</option>
+                                                <option>21</option>
+                                                <option>22</option>
+                                                <option>23</option>
+                                                <option>24</option>
+                                                <option>25</option>
+                                                <option>26</option>
+                                                <option>27</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="cvv"><h6>CVV/CVC</h6></label>
+                                                <input class="form-control" id="cvv" type="password" maxlength="4"
+                                                       autocomplete="on"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group mb-0">
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input id="chk1" type="checkbox" name="chk"
+                                                           class="custom-control-input" checked="true"/> <label
+                                                        for="chk1" class="custom-control-label text-muted text-sm">save
+                                                    my card for future payment</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="card-footer">-->
+                                    <button type="button" class="btn btn-danger" id="confirm"><i
+                                            class="fas fa-mobile-alt mr-8"></i> Confirm
+                                        Payment
+                                    </button>
+                                    <!--</div>-->
+                                </form>
+                            </div>
+
+                            <!-- Paypal info -->
+                            <div id="paypal" class="tab-pane fade pt-3">
+                                <h6 class="pb-2">Select your paypal account type</h6>
+                                <div class="form-group "><label class="radio-inline"> <input type="radio"
+                                                                                             name="optradio"
+                                                                                             checked="true"/>
+                                    Domestic
+                                </label>
+                                    <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5"/>International
+                                    </label></div>
+                                <p>
+                                    <button type="button" class="btn btn-danger"><i class="fab fa-paypal mr-2"></i>
+                                        Log
+                                        into my Paypal
+                                    </button>
+                                </p>
+                                <p class="text-muted"> Note: After clicking on the button, you will be directed to a
+                                    secure
+                                    gateway for payment. After completing the payment process, you will be
+                                    redirected back
+                                    to
+                                    the website to view details of your order. </p>
+                            </div> <!-- End -->
+                            <!-- bank transfer info -->
+                            <div id="net-banking" class="tab-pane fade pt-3">
+                                <div class="form-group">
+                                    <label for="ccmonth"><h6>Select your Bank</h6></label>
+                                    <select class="form-control" id="ccmonth">
+                                        <option value="" selected="true" disabled="true">--Please select your Bank--
+                                        </option>
+                                        <option>Chase</option>
+                                        <option>Bank Of America</option>
+                                        <option>Wells Fargo</option>
+                                        <option>TD Bank</option>
+                                        <option>Citibank</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <p>
+                                        <button type="button" class="btn btn-danger"><i
+                                                class="fas fa-mobile-alt mr-2"></i>
+                                            Proceed Payment
+                                        </button>
+                                    </p>
+                                </div>
+                                <p class="text-muted">Note: After clicking on the button, you will be directed to a
+                                    secure
+                                    gateway for payment. After completing the payment process, you will be
+                                    redirected back
+                                    to
+                                    the website to view details of your order. </p>
+                            </div> <!-- End -->
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mx-auto text-bold ">
+                <h6><b>Summary</b></h6>
+                <div class="card mb-3">
+                    <div class="p-2">
+
+                        <div class="p-2 d-flex justify-content-between">
+                            <div class="d-flex flex-column">Event Price </div>
+                            <div class="mt-1">$<label th:text="${eventPrice}"></label><sup class="super-price">/Ticket</sup>
+                            </div>
+                        </div>
+                        <div class="p-2 d-flex justify-content-between">
+                            <div class="d-flex flex-column">Ticket Count </div>
+                            <div class="mt-1"><label th:text="${purchaseQuantity}"></label></div>
+                        </div>
+                    </div>
+                    <hr class="mt-0 line solid">
+                    <div class="p-2">
+                        <div class="p-2 d-flex justify-content-between">
+                            <div class="d-flex flex-column">Sub-Total</div>
+                            <div class="mt-1">$<label th:text="${subTotal}"></label></div>
+                        </div>
+                        <div class="p-2 d-flex justify-content-between">
+                            <div class="d-flex flex-column">Tax</div>
+                            <div class="mt-1">$<label th:text="${tax}"></label></div>
+                        </div>
+                    </div>
+                    <hr class="mt-0 line solid">
+                    <div class="p-2 d-flex justify-content-between text-bold">
+                        <div class="d-flex flex-column"><span>Today You Pay</span></div>
+                        <div class="mt-1">$<label th:text="${totalAmount}"></label></div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End -->
+
+    </div> <!-- End -->
+</div>
+
+</body>
+</html>

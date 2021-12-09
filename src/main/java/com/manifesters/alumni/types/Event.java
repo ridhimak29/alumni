@@ -34,6 +34,11 @@ public class Event {
     @Column(name = "TICKET_PRICE")
     private double price;
 
+    private Date createTs;
+    private String createUser;
+    private Date updateTs;
+    private String updateUser;
+
     public Event (String eventName, String venue, String description, Date date, String imagePath, double price) {
         this.eventName = eventName;
         this.venue = venue;
@@ -45,6 +50,38 @@ public class Event {
 
     public Event(){
 
+    }
+
+    public Date getCreateTs() {
+        return createTs;
+    }
+
+    public void setCreateTs(Date createTs) {
+        this.createTs = createTs;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public Date getUpdateTs() {
+        return updateTs;
+    }
+
+    public void setUpdateTs(Date updateTs) {
+        this.updateTs = updateTs;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
     }
 
     public void setId(long id) {

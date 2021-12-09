@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Payment Confirmation</title>
+
+    <script src="https://kit.fontawesome.com/d82da44153.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            rel="stylesheet" crossorigin="anonymous">
+
+    <!--Stylesheet for Header/Footer-->
+    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="css/hb.css">
+</head>
+<body>
+<header th:insert="fragments/header.html :: header"></header>
+
+<!--<header th:insert="fragments/header.html :: header"> </header>-->
+<div class="container text-danger">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
+        <tr>
+            <td align="center"
+                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
+                <img src="https://img.icons8.com/carbon-copy/100/000000/checked-checkbox.png" width="125" height="120"
+                     style="display: block; border: 0px;"/><br>
+                <h2 style="font-size: 30px; font-weight: 800; line-height: 36px; color: danger; margin: 0;"> Thank You
+                    For
+                    Registering for an Event! </h2>
+            </td>
+        </tr>
+        <tr>
+            <td align="left"
+                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
+                <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: danger;"> Your registration for
+                    event &quot;<label th:text="${event.eventName}"></label>&quot; is confirmed. You will receive an email with
+                    detail about the event.</p>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" style="padding-top: 40px;">
+                <table cellspacing="10" cellpadding="10" border="1" width="100%">
+                    <tr>
+                        <td width="60%" align="left" bgcolor="#eeeeee"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                            Order Confirmation #
+                        </td>
+                        <td width="40%" align="left" bgcolor="#eeeeee"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                            <label th:text="${transaction.transactionId}"></label></td>
+                    </tr>
+                    <tr>
+                        <td width="60%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                            Event Name
+                        </td>
+                        <td width="40%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                            <label th:text="${event.eventName}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                            Number of Tickets
+                        </td>
+                        <td width="40%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                            <label th:text="${ticketQuantity}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                            Date of an Event
+                        </td>
+                        <td width="40%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                            <label th:text="${eventDate}"></label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" style="padding-top: 20px;">
+                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Total Amount Paid
+                        </td>
+                        <td width="25%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            <label>$</label><label th:text="${transaction.amount}"></label></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
