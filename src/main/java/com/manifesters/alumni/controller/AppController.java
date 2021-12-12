@@ -107,6 +107,13 @@ public class AppController {
         return "home";
     }
 
+    @GetMapping("/contactus")
+    public String contactusView(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
+        return "contact_us";
+    }
+
     @GetMapping("/sessionTest")
     public String getSession() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
