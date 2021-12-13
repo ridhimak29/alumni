@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,6 +48,23 @@ public class AppController {
         model.addAttribute("sessionId", userSessionService.getUserSessionId());
         return "index";
 
+    }
+
+    @GetMapping("/login")
+    public String viewLoginPage() {
+        // custom logic before showing login page...
+        return "login";
+    }
+
+    @GetMapping(value="/logout")
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        model.addAttribute("auth", auth);
+        model.addAttribute("sessionId", userSessionService.getUserSessionId());
+        return "index";
     }
 
     @GetMapping("/signup")

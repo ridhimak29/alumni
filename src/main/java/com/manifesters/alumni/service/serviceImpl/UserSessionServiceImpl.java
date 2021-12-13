@@ -13,7 +13,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     public String getUserSessionId() {
         String sessionId = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(!auth.getPrincipal().equals("anonymousUser")) {
+        if(auth != null && !auth.getPrincipal().equals("anonymousUser")) {
             sessionId = ((WebAuthenticationDetails)auth.getDetails()).getSessionId();
         }
         return sessionId;
