@@ -92,7 +92,7 @@
 	margin: -100px 0 0 -50px;
 	padding: 50px;
 	padding-top: 125px;
-	background: #800020;
+	background: #800000;
 	list-style-type: none;
 	-webkit-font-smoothing: antialiased;
 	/* to stop flickering of text in safari */
@@ -123,10 +123,20 @@
 }
 
 .menuHeaderContainer {
-	background-color: #800020;
+	background-color: #800000;
 	height: 50px;
 }
 
 .menuHeaderLogo {
 	position: absolute; margin-left: 100px;
+}
+
+.color-code{
+	background-color:#800000;
+}
+.color-code1{
+	color: gold;
+}
+.color-burgendy{
+	color:#800000;
 }

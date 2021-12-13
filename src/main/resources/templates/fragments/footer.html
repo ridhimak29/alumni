@@ -1,57 +1,28 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta charset="ISO-8859-1">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!-- adds ajax and bootstrap libraries -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- adds bootstrap libraries -->
+<title>Header</title>
+<meta name="Header1" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/hb.css">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<footer th:fragment="footer" class="bg-danger text-white text-center" >
-	
+	<footer th:fragment="footer" class="color-code color-code1 text-center">
 		<div class="pt-2 mt-5">
-		<div class=" bg-info">
-				<div class="text-center">Follow Us</div>
-			<!-- Section: Social media -->
-			<section class="mb-2">
-				<!-- Facebook -->
-				<a class="btn btn-outline-light btn-floating m-1" href="#!"
-					role="button"><i class="fa fa-facebook-f"></i></a>
-
-				<!-- Twitter -->
-				<a class="btn btn-outline-light btn-floating m-1" href="#!"
-					role="button"><i class="fa fa-twitter"></i></a>
-
-				<!-- Google -->
-				<a class="btn btn-outline-light btn-floating m-1" href="#!"
-					role="button"><i class="fa fa-google"></i></a>
-
-				<!-- Instagram -->
-				<a class="btn btn-outline-light btn-floating m-1" href="#!"
-					role="button"><i class="fa fa-instagram"></i></a>
-
-				<!-- Linkedin -->
-				<a class="btn btn-outline-light btn-floating m-1" href="#!"
-					role="button"><i class="fa fa-linkedin"></i></a>
-
-			</section>
-			
+			<div class="color-code color-code1">
+				<div class="text-center h6 mb-2">Follow Us on Social Media</div>
+				<section class="m-2 pt-2">
+					<img class="ml-3" src="images/facebook.png" width="30" height="30"/>
+					<img class="ml-3" src="images/instagram.png" width="30" height="30"/>
+					<img class="ml-3" src="images/linkedin.png" width="30" height="30"/>
+					<img class="ml-3" src="images/twitter.png" width="30" height="30"/>	
+				</section>
+			</div>
+			<div class="text-center p-1 color-code color-code1">2021 Copyright:
+				Maggotty High Alumni Association – US northern Region</div>
 		</div>
-		<!-- Copyright -->
-		<div class="text-center p-3 bg-info">
-			© 2020 Copyright: <a  class="text-white"
-				href="">© 2020 Copyright: NexusPeek : Alumni EngageMent System</a>
-		</div>
-		</div>
-			
 	</footer>
-	<!-- Footer -->
 </body>
 </html>
