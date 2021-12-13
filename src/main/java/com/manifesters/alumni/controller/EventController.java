@@ -2,6 +2,7 @@ package com.manifesters.alumni.controller;
 
 import com.manifesters.alumni.domain.TransactionType;
 import com.manifesters.alumni.service.EventService;
+import com.manifesters.alumni.service.UserSessionService;
 import com.manifesters.alumni.types.Event;
 import com.manifesters.alumni.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,16 @@ public class EventController {
     @Autowired
     private EventService service;
 
+    @Autowired
+    private UserSessionService userSessionService;
+
     @GetMapping("/events")
     public String populateEvents(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("auth", auth);
         List<Event> events  = service.getAllEvents(0, 15, "date");
+        //added to persist the session and show signin/signout in hamburger
+        model.addAttribute("sessionId", userSessionService.getUserSessionId());
         model.addAttribute("events", events );
         return "event";
     }

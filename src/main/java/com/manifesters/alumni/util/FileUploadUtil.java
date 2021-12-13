@@ -11,10 +11,18 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
-    public static final String uploadDirectory = System.getProperty("user.dir")+"/src/main/upload/static/images";
+    public static String getUploadDirectory(){
+        String systemOS = System.getProperty("os.name");
+        String filePath = System.getProperty("user.dir")+"/src/main/upload/static/images";
+        if (systemOS.contains("Mac")) {
+            return filePath;
+        }
+        return filePath.replaceAll("/", System.getProperty("file.separator"));
+    }
+
     public static void saveFile( String fileName,
                                 MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get(uploadDirectory);
+        Path uploadPath = Paths.get(getUploadDirectory());
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
