@@ -94,4 +94,6 @@ public class EventController {
         binder.registerCustomEditor(       Date.class,
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"), true));
     }
+    
+    
 }

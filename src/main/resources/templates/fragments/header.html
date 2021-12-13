@@ -8,38 +8,35 @@
 </head>
 <body>
 	<header th:fragment="header">
-
 		<nav role="navigation">
-
 			<div class="menuHeaderContainer">
 				<div class="menuHeaderLogo">
 					<img src="/images/logo.png" class="float-start" height="50">
 				</div>
-
 				<div class="menuHeadingText">
-					<strong>NexusPeak Alumni Engagement</strong>
+					<strong>Maggotty High Alumni Association – US northern Region</strong>
 				</div>
 				<div id="menuToggle">
 					<input type="checkbox" /> <span></span> <span></span> <span></span>
 					<ul id="menu">
 						<li><a href="/"><img src="/images/logo.png"
-								class="float-start" height="50"></a></li>
+								height="50"></a></li>
 						<li><a href="/">Home</a></li>
-						<li><a href="/events">Events</a></li>
-						<li><a href="/FAQs">FAQ</a></li>
-						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/history">History</a></li>
+						<li><a href="/events">Events</a></li>						
+						<li><a href="/FAQ">FAQ</a></li>						
 						<li><a href="/contactus">Contact Us</a></li>
-						<span th:switch="${sessionId != null}">
-							<span th:case="${true}">
-								<li><a href="/logout">Logout</a></li>
-							</span>
-							<span th:case="*">
+						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSear0ugt3dI5lmbTn-W8fWUjAekZg4IGuA-fEJ1NniY66S24w/viewform?vc=0&c=0&w=1&flr=0">Feedback</a></li>
+						
+						<div th:switch="${auth.principal}">
+							<div th:case="anonymousUser">
 								<li><a href="/login">Sign In</a></li>
 								<li><a href="/signup">Sign Up</a></li>
-							</span>
-						</span>
-<!-- 						<li th:text="${sessionId}"></li> -->
-					</ul>
+							</div>
+							<div th:case="*"><li><a href="/logout">Logout</a></li></div>
+						</div>
+<!-- 				<li th:text="${sessionId}"></li>  -->	
+				</ul>
 				</div>
 			</div>
 		</nav>
