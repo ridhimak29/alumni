@@ -89,8 +89,5 @@ public class EventController {
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"), true));
     }
     
-    @RequestMapping(value = "/FAQ", method = RequestMethod.GET)
-    public String FAQPage(Model model) {
-    return "FAQ";
-    }
+    
 }
