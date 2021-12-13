@@ -10,7 +10,7 @@ import java.io.File;
 public class AlumniApplication {
 
 	public static void main(String[] args) {
-		new File(FileUploadUtil.uploadDirectory).mkdir();
+		new File(FileUploadUtil.getUploadDirectory()).mkdir();
 		SpringApplication.run(AlumniApplication.class, args);
 		System.out.println("hi ");
 	}
