@@ -29,15 +29,17 @@
 						<li><a href="/FAQs">FAQ</a></li>
 						<li><a href="/aboutus">About Us</a></li>
 						<li><a href="/contactus">Contact Us</a></li>
-						<span th:switch="${auth.principal}">
-							<span th:case="anonymousUser">
+						<span th:switch="${sessionId != null}">
+							<span th:case="${true}">
+								<li><a href="/logout">Logout</a></li>
+							</span>
+							<span th:case="*">
 								<li><a href="/login">Sign In</a></li>
 								<li><a href="/signup">Sign Up</a></li>
 							</span>
-							<span th:case="*"><li><a href="/logout">Logout</a></li></span>
 						</span>
-<!-- 						<li th:text="${sessionId}"></li> 
- -->					</ul>
+<!-- 						<li th:text="${sessionId}"></li> -->
+					</ul>
 				</div>
 			</div>
 		</nav>
