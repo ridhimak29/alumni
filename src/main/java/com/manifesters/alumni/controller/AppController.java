@@ -52,9 +52,9 @@ public class AppController {
 
     @GetMapping("/login")
     public String viewLoginPage(Model model) {
-        // custom logic before showing login page...
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("auth", auth);
+        // custom logic before showing login page...
         return "login";
     }
 
@@ -66,11 +66,13 @@ public class AppController {
         }
         model.addAttribute("auth", auth);
         model.addAttribute("sessionId", userSessionService.getUserSessionId());
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
     public String showRegistrationForm(Model model){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
         model.addAttribute("user", new User());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("auth", auth);
