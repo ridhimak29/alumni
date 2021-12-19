@@ -66,7 +66,7 @@ public class AppController {
         }
         model.addAttribute("auth", auth);
         model.addAttribute("sessionId", userSessionService.getUserSessionId());
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
