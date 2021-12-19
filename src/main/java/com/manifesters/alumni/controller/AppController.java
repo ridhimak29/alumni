@@ -51,7 +51,9 @@ public class AppController {
     }
 
     @GetMapping("/login")
-    public String viewLoginPage() {
+    public String viewLoginPage(Model model) {
+    	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         model.addAttribute("auth", auth);
         // custom logic before showing login page...
         return "login";
     }
@@ -69,6 +71,8 @@ public class AppController {
 
     @GetMapping("/signup")
     public String showRegistrationForm(Model model){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth);
         model.addAttribute("user", new User());
         return "signup_form";
     }

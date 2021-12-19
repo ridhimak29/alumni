@@ -17,8 +17,7 @@ public class FileUploadUtil {
         if (systemOS.contains("Mac")) {
             return filePath;
         }
-        return filePath.replaceAll("/", System.getProperty("file.separator"));
-    }
+        return "/src/main/upload/static/images";    }
 
     public static void saveFile( String fileName,
                                 MultipartFile multipartFile) throws IOException {
