@@ -40,8 +40,7 @@
             <!-- Column -->
             <div class="col-md-8 text-center">
                 <h3 class="my-3">Upcoming Events</h3>
-                <h6 class="subtitle font-weight-normal">Welcome to the Alumni Engagement virtual events page. As part of the Development and Alumni Engagement team, we offer a variety of virtual and in-person events and presentations throughout the year for our alumni community.
-                    Events held on campus, virtually, and in cities across the country are a great opportunity to meet up with friends, make new ones, and stay connected.</h6>
+                <h6 class="subtitle font-weight-normal">Welcome to the MHAA-USNR Alumni Engagement events page. As part of the Alumni Association, we offer a variety of virtual and in-person events and presentations throughout the year for our alumni community. Events held on campus, virtually, and in cities across the country are a great opportunity to meet up with friends, make new ones, and stay connected.</h6>
             </div>
             <!-- Column -->
         </div>
@@ -99,7 +98,7 @@
         <div class="col-md-4 on-hover" th:each="event : ${events}">
             <div class="card border-0 mb-4">
                 <a href="#">
-                    <img class="card-img-top" th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
+                    <img class="card-img-top event-img-height"  th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
                 <div class="date-pos p-2 d-inline-block text-center rounded text-white position-absolute button-color">
                     <span class="event-date" th:text="${#dates.monthNameShort(event.date)}"></span>
                     <span class="d-block" th:text="${#dates.day(event.date)}"></span>
