@@ -21,7 +21,7 @@ public class Event {
     @Column(name = "EVENT_LOCATION")
     private String venue;
 
-    @Column(name = "EVENT_DESCRIPTION")
+    @Column(name = "EVENT_DESCRIPTION",length = 1000)
     private String description;
 
     @Column(name = "START_DATE_TIME")

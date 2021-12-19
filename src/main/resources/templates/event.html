@@ -99,7 +99,7 @@
         <div class="col-md-4 on-hover" th:each="event : ${events}">
             <div class="card border-0 mb-4">
                 <a href="#">
-                    <img class="card-img-top" th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
+                    <img class="card-img-top event-img-height"  th:src="'upload/static/images/'+ ${event.imagePath}" alt="${event.eventName}"></a>
                 <div class="date-pos p-2 d-inline-block text-center rounded text-white position-absolute button-color">
                     <span class="event-date" th:text="${#dates.monthNameShort(event.date)}"></span>
                     <span class="d-block" th:text="${#dates.day(event.date)}"></span>
