@@ -10,8 +10,8 @@
 .blog-home2 h3,
 .blog-home2 h4,
 .blog-home2 h5,
-.blog-home2 h6 {
-  color: #3e4555;
+.blog-home2 h6, a {
+  color: #800000;
 }
 
 .blog-home2 .font-weight-medium {
@@ -107,3 +107,8 @@
 .event-img-height{
   height: 300px;
 }
+
+.margin-bottom-20px{
+ margin-bottom: 20px;
+}
+
