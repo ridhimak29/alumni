@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta name="NexusPeek" content="width=device-width, initial-scale=1">
-    <title>NexusPeak Alumni User Registration</title>
+    <meta name="Alumni" content="width=device-width, initial-scale=1">
+    <title>User Registration</title>
     <style type="text/css">
     .thumbnail {
     position: relative;
@@ -23,6 +23,11 @@
   border-color:  #800020 !important;
   color:  #800020 !important;
 }
+   footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
     </style>
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -38,7 +43,7 @@
 <header th:insert="fragments/header.html :: header"> </header>
 <div class="container text-center">
     <div>
-        <h3>NexusPeak User Registration</h3>
+        <h3>User Registration</h3>
     </div>
     <form th:action="@{/process_register}" th:object="${user}"
           method="post" style="max-width: 600px; margin: 0 auto;">
@@ -73,7 +78,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label" for="role">Role: </label>
                 <div class="col-8">
-                    <select name="role" id="role"  style="width: 500px !important; min-width: 370px; max-width: 370px; height:50px !important;max-height:100px">
+                    <select name="role" id="role"  style="width: 500px !important; min-width: 630px; max-width: 770px; height:30px !important;max-height:100px">
                         <option value="" disabled selected>Select your option</option>
                         <option value="Alumni">Alumni</option>
                         <option value="Alumni_Coordinator">Alumni_Coordinator</option>
@@ -92,6 +97,6 @@
         </div>
     </form>
 </div>
-<footer th:insert="fragments/footer.html :: footer"></footer>
+<footer th:insert="fragments/footer.html :: footer" contentEditable></footer>
 </body>
 </html>
