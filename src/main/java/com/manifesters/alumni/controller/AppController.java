@@ -74,8 +74,6 @@ public class AppController {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("auth", auth);
         model.addAttribute("user", new User());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("auth", auth);
         return "signup_form";
     }
     @PostMapping("/process_register")
