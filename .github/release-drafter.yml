@@ -1,8 +1,21 @@
 template: |
-  ## Changes
+  ## Changelog
 
   $CHANGES
 
-  ## Contributors
+changelog-filters:
+  # Include all changes
+  include-labels: []
+  # Exclude changes with these labels
+  exclude-labels:
+    - skip-changelog
 
-  $CONTRIBUTORS
+version-resolvers:
+  # Use the existing latest tag
+  tag: latest
+
+# Publish the release automatically
+update-releases: true
+
+# Close the draft release
+close-milestone: true
