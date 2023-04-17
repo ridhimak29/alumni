@@ -1,5 +1,5 @@
 # alumni
-alumni
+alumni is website
 
 **[Login and Registration** ](https://manifesters.atlassian.net/browse/TM-6)
 
