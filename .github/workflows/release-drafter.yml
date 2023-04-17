@@ -19,7 +19,6 @@ jobs:
         with:
           config-name: release-drafter.yml
       - name: Add release notes to latest tag
-          if: success()
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
