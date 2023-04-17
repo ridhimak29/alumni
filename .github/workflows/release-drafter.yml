@@ -1,40 +1,29 @@
-name: Release Drafter
+name: Generate Release Notes
 
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 jobs:
-  update_release_draft:
+  release-notes:
     runs-on: ubuntu-latest
-    env:
-      ACTIONS_STEP_DEBUG: true
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Generate release notes
-        uses: release-drafter/release-drafter@v5
+      - uses: actions/checkout@v2
+      - uses: release-drafter/release-drafter@v7.3.0
         with:
-          config-name: release-drafter.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check release notes file
-        run: |
-          if [ ! -f $RD_ARTIFACTS_DIR/release-changelog.md ]; then
-            echo "Release notes file not found"
-            exit 1
-          fi
-      - name: Add release notes to latest tag
-        run: |
-          latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
-          tag_name=${latest_tag##*/}
-          release_notes=$(cat $RD_ARTIFACTS_DIR/release-changelog.md)
-          release_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/${{ github.event.release.tag_name }}" | jq -r '.id')
-          curl -H "Authorization: token $GITHUB_TOKEN" \
-               -X PATCH \
-               -d "{\"body\": \"$release_notes\"}" \
-               "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/$release_id"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-path: .github/release-drafter.yml
+
+      - name: Update Release Body
+        uses: peter-evans/create-pull-request@v3.12.0
+        with:
+          commit-message: Update release body with release notes
+          title: Update release body with release notes
+          body: |
+            ${{ steps.drafter.outputs.changelog }}
+          branch: update-release-body
+          base: ${{ github.ref }}
+          author: ${{ github.actor }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
