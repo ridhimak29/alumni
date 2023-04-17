@@ -20,6 +20,12 @@ jobs:
           config-name: release-drafter.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check release notes file
+        run: |
+          if [ ! -f $RD_ARTIFACTS_DIR/release-changelog.md ]; then
+            echo "Release notes file not found"
+            exit 1
+          fi
       - name: Add release notes to latest tag
         run: |
           latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))

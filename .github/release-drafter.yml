@@ -1,24 +1,8 @@
-name-template: '$RESOLVED_VERSION'
-tag-template: '$RESOLVED_VERSION'
 template: |
-  # Release $RESOLVED_VERSION
-
   ## Changes
+
   $CHANGES
 
   ## Contributors
+
   $CONTRIBUTORS
-
-  ## Changelog
-  $CHANGELOG
-
-  $RELEASE_NOTES
-change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
-version-resolver:
-  default: patch
-prerelease: false
-categories:
-  - title: 'Dependency Updates'
-    label: 'dependency-update'
-exclude-contributors:
-  - 'bind-cxeng-1'
