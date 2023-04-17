@@ -1,12 +1,19 @@
-name-template: 'v$RESOLVED_VERSION'
-tag-template: 'v$RESOLVED_VERSION'
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
 template: |
-  ## What's Changed
+  # Release $RESOLVED_VERSION
+
+  ## Changes
   $CHANGES
 
   ## Contributors
   $CONTRIBUTORS
-change-template: '- $TITLE by @$AUTHOR in #$NUMBER'
+
+  ## Changelog
+  $CHANGELOG
+
+  $RELEASE_NOTES
+change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
 version-resolver:
   default: patch
 prerelease: false
