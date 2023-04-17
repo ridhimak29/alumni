@@ -24,6 +24,6 @@ jobs:
             ${{ steps.drafter.outputs.changelog }}
           branch: update-release-body
           base: ${{ github.ref }}
-          author: "ridhimakohli2901@gmail.com"
+          author: "Ridhima Kohli <ridhimakohli2901@gmail.com>"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
