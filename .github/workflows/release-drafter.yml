@@ -21,11 +21,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Add release notes to latest tag
-          run: |
-            latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
-            tag_name=${latest_tag##*/}
-            release_notes=$(cat $RD_ARTIFACTS_DIR/release-changelog.md)
-            curl -H "Authorization: token $GITHUB_TOKEN" \
-                 -X PATCH \
-                 -d "{\"body\": \"$release_notes\"}" \
-                 "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/${{ github.event.release.tag_name }}"
+        run: |
+          latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+          tag_name=${latest_tag##*/}
+          release_notes=$(cat $RD_ARTIFACTS_DIR/release-changelog.md)
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+               -X PATCH \
+               -d "{\"body\": \"$release_notes\"}" \
+               "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/${{ github.event.release.tag_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
