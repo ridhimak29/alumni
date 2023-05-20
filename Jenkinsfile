@@ -1,10 +1,15 @@
 pipeline {
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Branch name')
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch name')
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Environment')
     }
 
     agent any
+
+    tools {
+        // Define the Maven installation
+        maven 'maven'
+    }
 
     stages {
         stage('Checkout') {
