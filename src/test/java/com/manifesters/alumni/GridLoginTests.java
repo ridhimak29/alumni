@@ -6,41 +6,49 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LoginTests {
+public class GridLoginTests {
     private WebDriver driver;
+
 
     @BeforeMethod
     @Parameters("browser")
-    public void setUp(@Optional("hub") String browser) {
-        // Set up the browser driver based on the provided parameter
+    public void setUp(@Optional("chrome") String browser) throws MalformedURLException {
+        DesiredCapabilities capabilities;
         switch (browser) {
             case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions().addArguments("--remote-allow-origins=*");
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver(chromeOptions);
+                capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("chrome");
                 break;
             case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                //System.setProperty("webdriver.gecko.driver", "path/to/geckodriver");
-                driver = new FirefoxDriver();
+                capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("firefox");
                 break;
             case "safari":
-                WebDriverManager.safaridriver().setup();
-                //System.setProperty("webdriver.edge.driver", "path/to/msedgedriver");
-                driver = new SafariDriver();
+                capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("safari");
                 break;
             default:
                 throw new IllegalArgumentException("Invalid browser specified: " + browser);
         }
+
+        // Set the URL of the Selenium Grid Hub
+        String hubUrl = "http://192.168.1.184:4444/wd/hub";
+
+        // Create the RemoteWebDriver instance
+        driver = new RemoteWebDriver(new URL(hubUrl), capabilities);
         driver.manage().window().maximize();
     }
 

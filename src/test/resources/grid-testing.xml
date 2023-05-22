@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Alumni Grid Suite" parallel="methods" thread-count="3">
+    <listeners>
+        <listener class-name="org.testng.reporters.SuiteHTMLReporter" />
+        <listener class-name="org.testng.reporters.XMLReporter" />
+        <listener class-name="org.testng.reporters.EmailableReporter" />
+    </listeners>
+    <test name="Chrome Login Tests">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="com.manifesters.alumni.GridLoginTests" />
+        </classes>
+    </test>
+    <test name="Firefox Login Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.manifesters.alumni.GridLoginTests" />
+        </classes>
+    </test>
+    <test name="Safari Login Tests">
+        <parameter name="browser" value="safari"/>
+        <classes>
+            <class name="com.manifesters.alumni.GridLoginTests" />
+        </classes>
+    </test>
+</suite>
